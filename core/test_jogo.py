@@ -86,7 +86,7 @@ class JogoTestCase(TestCase):
     def setUp(self):
         self.jogo = Jogo()
         self.jogo.gerenciador_de_jogadores = GerenciarJogadoresSpy()
-        self.jogo.gerenciador_de_perguntas = GerenciadorDePerguntasSpy()
+        self.jogo.gerenciador_de_perguntas_e_respostas = GerenciadorDePerguntasSpy()
         self.jogo.gerenciador_de_respostas = GerenciadorDeRespostasSpy()
 
 
@@ -98,7 +98,7 @@ class JogoTests(JogoTestCase):
 
         self.jogo.iniciar()
 
-        self.assertEqual(jogador_esperado.jogador_id, self.jogo.gerenciador_de_perguntas.jogador_a_perguntar_spied.jogador_id)
+        self.assertEqual(jogador_esperado.jogador_id, self.jogo.gerenciador_de_perguntas_e_respostas.jogador_a_perguntar_spied.jogador_id)
 
 
 class QuandoForPerguntaTests(JogoTestCase):
@@ -108,7 +108,7 @@ class QuandoForPerguntaTests(JogoTestCase):
 
         jogador_a_perguntar = JogadorEntity(jogador_id=1)
         pergunta_esperada = PerguntaEntity(jogador_a_perguntar)
-        self.jogo.gerenciador_de_perguntas.receber_pergunta_return = pergunta_esperada
+        self.jogo.gerenciador_de_perguntas_e_respostas.receber_pergunta_return = pergunta_esperada
 
     def test_jogador_a_responder(self):
         jogador_a_responder = JogadorEntity(jogador_id=2)
