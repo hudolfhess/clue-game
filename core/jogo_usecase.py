@@ -54,6 +54,7 @@ class JogadorGatewaySpy(object):
         pass
 
     def perguntar_para_o(self, jogador):
+
         return self
 
     def se_possui_alguma_pergunta(self):
@@ -196,7 +197,7 @@ class JogoUsecase(object):
         if self.jogador_gateway.perguntar_para_o(jogador_origem).se_possui_alguma_pergunta():
             pergunta = self.jogador_gateway.obter_do(jogador_origem).sua_pergunta()
 
-            if self.carta_entity.validar_se(jogador_origem).possui_todas_as_cartas_da(pergunta):
+            if self.carta_entity.validar_se(jogador_origem).perguntou_com(pergunta).cartas_validas():
                 self._proxima_rodada_de_respostas(jogador_origem, pergunta, demais_jogadores, jogadores)
 
             else:
@@ -206,7 +207,7 @@ class JogoUsecase(object):
         elif self.jogador_gateway.perguntar_para_o(jogador_origem).se_possui_algum_palpite():
             palpite = self.jogador_gateway.obter_do(jogador_origem).seu_palpite()
 
-            if self.carta_entity.validar_se(jogador_origem).possui_todas_as_cartas_do(palpite):
+            if self.carta_entity.validar_se(jogador_origem).palpitou_com(palpite).cartas_validas():
                 self.jogador_gateway.informar_aos(demais_jogadores).que_o(jogador_origem).palpita_com(palpite)
 
                 if self.carta_entity.acertou_crime_com_o(palpite):
@@ -241,7 +242,7 @@ class JogoUsecase(object):
                 self.jogador_gateway.informar_aos(demais_jogadores).que_o(jogador_destino).possui_resposta()
 
             else:
-                if self.carta_entity.validar_se(jogador_destino).possui_alguma_carta():
+                if self.carta_entity.validar_se(jogador_destino).possui_alguma_carta_da(pergunta):
                     self._eliminar_jogador_por_atitude_desportiva(jogador_destino, jogadores)
                     self._proxima_rodada_de_respostas(jogador_origem, pergunta, demais_jogadores, jogadores)
 
